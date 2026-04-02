@@ -1,5 +1,13 @@
-export default function ShowTask({taskList, setTaskList}) {
-  
+export default function ShowTask({ taskList, setTaskList, setTask }) {
+function handleEdit(id){
+  const selectedTask = taskList.find((todo) => todo.id === id);
+  setTask(selectedTask);
+  }  
+
+  function handleDelete(id){
+  const updateTaskList = taskList.filter((todo) => todo.id !== id);
+  setTaskList(updateTaskList);
+  }  
   return (
     <>
       <section className="showTask">
@@ -11,14 +19,14 @@ export default function ShowTask({taskList, setTaskList}) {
           <button className="clearAll" onClick={()=> setTaskList([])}>Clear All</button>
         </div>
         <ul>
-          {taskList.map((task) => (
-            <li key={task.id}>
+          {taskList.map((todo) => (
+            <li key={todo.id}>
               <p>
-                <span className="name">{task.name}</span>
-                <span className="time">{task.time}</span>
+                <span className="name">{todo.name}</span>
+                <span className="time">{todo.time}</span>
               </p>
-              <i className="bi bi-pencil-square"></i>
-              <i className="bi bi-trash"></i>
+              <i className="bi bi-pencil-square" onClick={()=> handleEdit(todo.id)}></i>
+              <i className="bi bi-trash" onClick={()=> handleDelete(todo.id)}></i>
             </li>
           ))}
         </ul>
